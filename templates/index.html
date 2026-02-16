@@ -2,6 +2,7 @@
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Sistema Escolar v1</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
   <link href="https://cdn.jsdelivr.net/npm/tom-select@2.2.2/dist/css/tom-select.bootstrap5.min.css" rel="stylesheet" />
@@ -10,35 +11,27 @@
     .container-fluid { padding: 0 !important; }
     .sessao-0 { margin: 0 0 4px 0; padding: 8px 15px; border-radius: 10px; border: 1px solid #dee2e6; background: white; }
     .painel-unificado { background: white; border: 1px solid #dee2e6; border-radius: 10px; padding: 15px; }
+    
+    /* Layout padrão (Desktop) */
     .col-esquerda { width: 22%; border-right: 1px solid #eee; padding-right: 15px; }
     .col-direita { width: 78%; padding-left: 15px; }
     .divisor-horizontal { border-bottom: 1px solid #eee; margin-bottom: 12px; padding-bottom: 8px; }
     .form-label { font-weight: bold; font-size: 0.95rem; }
 
+    /* Ajustes TomSelect */
     .ts-wrapper.multi .ts-control>div {
       background-color: #ff4d4d !important;
       color: white !important;
       border-radius: 5px !important;
       padding: 2px 25px 2px 8px !important;
       margin: 2px 0.5% !important;
-      width: 24% !important;
+      width: auto !important; /* Ajustado para não quebrar no celular */
+      min-width: 24%;
       display: inline-block !important;
       position: relative !important;
       overflow: hidden !important;
       text-overflow: ellipsis !important;
       white-space: nowrap !important;
-    }
-
-    .ts-wrapper.multi .ts-control>div .remove {
-      position: absolute !important;
-      right: 0 !important;
-      top: 0 !important;
-      width: 20px !important;
-      height: 100% !important;
-      border-left: 1px solid rgba(255, 255, 255, 0.2) !important;
-      display: flex !important;
-      align-items: center !important;
-      justify-content: center !important;
     }
 
     .ts-control {
@@ -50,15 +43,28 @@
       border-radius: 5px !important;
     }
 
-    .ts-dropdown {
-      position: absolute !important;
-      z-index: 1000 !important;
-      background: white !important;
-      border: 2px solid #0d6efd !important;
-      border-radius: 0 0 5px 5px !important;
-    }
-
     .textarea-relato { height: 460px !important; resize: none; border: 1px solid #dee2e6; }
+
+    /* ============================================= */
+    /* AJUSTES PARA CELULAR (RESPONSIVIDADE)       */
+    /* ============================================= */
+    @media (max-width: 768px) {
+      /* Botões do topo: um ao lado do outro ou pulando linha */
+      .sessao-0 { flex-direction: column; align-items: center !important; text-align: center; }
+      .sessao-0 .ms-auto { margin-left: 0 !important; margin-top: 10px; display: flex; flex-wrap: wrap; justify-content: center; gap: 5px; }
+      .sessao-0 h5 { width: 100%; margin-bottom: 5px; }
+      
+      /* Painel: Transforma colunas em linhas */
+      .painel-unificado > .d-flex { flex-direction: column !important; }
+      .col-esquerda, .col-direita { width: 100% !important; border: none !important; padding: 0 !important; }
+      .col-esquerda { margin-bottom: 20px; border-bottom: 2px solid #eee !important; padding-bottom: 15px !important; }
+
+      /* Alturas menores para não precisar rolar infinito */
+      .ts-control, .textarea-relato { min-height: 250px !important; max-height: 300px !important; }
+      
+      /* Botões maiores para o dedo */
+      .btn-sm { padding: 8px 12px; font-size: 0.85rem; }
+    }
   </style>
 </head>
 <body>
@@ -70,7 +76,7 @@
           <button type="button" class="btn btn-outline-secondary btn-sm mx-1" onclick="consultar()">🔍 Consultar</button>
           <button type="button" class="btn btn-outline-warning btn-sm mx-1" onclick="alert('Consulte para alterar')">✏️ Alterar</button>
           <button type="button" class="btn btn-outline-danger btn-sm mx-1" onclick="alert('Consulte para excluir')">🗑️ Excluir</button>
-          <div class="vr mx-2"></div>
+          <div class="vr mx-2 d-none d-md-block"></div>
           <button type="button" class="btn btn-outline-primary btn-sm mx-1" onclick="location.reload()">📄 Novo</button>
           <button type="button" class="btn btn-primary btn-sm mx-1" onclick="gravarDados()">💾 Gravar</button>
         </div>

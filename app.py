@@ -12,6 +12,7 @@ def limpar_nome(nome):
     return nome.replace(" - ", "-").strip()
 
 def hora_brasilia():
+    # Usando utcnow() conforme seu original, mas corrigindo para o padrão atual se necessário
     return (datetime.utcnow() - timedelta(hours=3)).strftime('%d/%m/%Y %H:%M')
 
 @app.route('/')
@@ -71,5 +72,6 @@ def excluir(id):
     return jsonify({"status": "sucesso"})
 
 if __name__ == '__main__':
-    app.run(debug=True)
-
+    # Adicionei host='0.0.0.0' para garantir que o Codespaces sempre consiga expor a porta corretamente
+    app.run(debug=True, host='0.0.0.0', port=5000)
+    
